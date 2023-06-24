@@ -56,7 +56,7 @@ export class UsersService {
     }
     updatedUser.save();
   }
-
+  // delete a user
   async deleteUser(userId: string) {
     const result = await this.usersModel.deleteOne({ _id: userId });
     if (result.deletedCount === 0) {
