@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Patch,
+  Put,
   Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -34,19 +35,25 @@ export class UsersController {
   }
 
   @Get(':id')
-  getUser(@Param('id') userId: string) {
-    return this.usersService.getUserById(userId);
+  async getUser(@Param('id') userId: string) {
+    const user = await this.usersService.getUserById(userId);
+    return user;
   }
 
-  @Patch(':id')
+  @Put(':id')
   async updateUser(
     @Param('id') userId: string,
     @Body('email') email: string,
     @Body('firstName') firstName: string,
     @Body('lastName') lastName: string,
   ) {
-    await this.usersService.updateUser(userId, email, firstName, lastName);
-    return null;
+    const updatedUser = await this.usersService.updateUser(
+      userId,
+      email,
+      firstName,
+      lastName,
+    );
+    return updatedUser;
   }
 
   @Delete(':id')

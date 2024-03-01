@@ -32,7 +32,7 @@ export class UsersService {
   }
   // get a single user
   async getUserById(userId: string) {
-    const user = await this.findUser(userId);
+    const user = await this.usersModel.findById(userId);
     return {
       id: user.id,
       email: user.email,
@@ -47,7 +47,7 @@ export class UsersService {
     firstName: string,
     lastName: string,
   ) {
-    const updatedUser = await this.findUser(userId);
+    const updatedUser = await this.usersModel.findById(userId);
     if (firstName) {
       updatedUser.firstName = firstName;
     }
@@ -55,6 +55,8 @@ export class UsersService {
       updatedUser.lastName = lastName;
     }
     updatedUser.save();
+
+    return updatedUser;
   }
   // delete a user
   async deleteUser(userId: string) {
